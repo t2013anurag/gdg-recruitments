@@ -4,9 +4,8 @@ $(function() {
 Fetching: addressable-2.3.5.gem (100%)\
 \nFetching: launchy-2.3.0.gem (100%)\
 \nFetching: require_all-1.3.2.gem (100%)\
-\nFetching: thor-0.18.1.gem (100%)\
-\nFetching: artii-2.0.3.gem (100%)\
-\nFetching: rainbow-1.1.4.gem (100%)\
+\nFetching: tech-2.0.3.gem (100%)\
+\nFetching: management-1.1.4.gem (100%)\
 \nFetching: recruitments-0.0.1.gem (100%)\
 \n ";
     var gem_install_message_post = "\
@@ -46,6 +45,9 @@ Silver Jublee Tower\
 
   var invitation_pre = "\
 \n[[b;#d33682;]========= recruitments invitation ==========]\
+  ";
+var process = "\
+\n[[b;#d33682;]========= recruitments process ==========]\
   ";
   var recruitments_text = "\
 \n     Ḡøøℊʟ℮ Ḏ℮ṽ℮ʟ☺ρεґ﹩ Ḡґ◎üρ    \
@@ -193,7 +195,72 @@ Sorry, you are slightly late for attending the event. \
           prompt: 'Do you want to open this link in the browser? (yes/no) ',
           greetings: null
         });
-      } else if (inputs[1] === "rsvp") {
+      } 
+      else if(inputs[1] === "process"){
+            term.echo(process);
+            term.echo("\nPlease answer the following questions! ");
+            term.echo("\nEnter your full name   :");
+            term.pop();
+            term.push(function(command,term){
+              //term.echo(command);
+              if(/^[a-zA-Z ]+$/.test(command)) {
+                var name = command; 
+              term.echo("\nYour name is " + name);
+              term.pop();
+              term.echo("\nEnter your registration number   :");
+              term.push(function(command, term){
+              if(!/^[0-9]2[a-zA-Z]3[0-9]3/.test(command)) {
+                  var regno = command;
+                  term.echo("\nYour Regno is " + regno);
+                  //term.echo("Name " + name);
+                  term.pop();
+                  term.echo("\nEnter your email id   : ");
+                  term.push(function(command, term){
+                    if(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(command)) {
+                     var email = command;
+                      term.echo("\nYour email id is " + email);
+                      term.pop();
+                      term.echo("\nEnter you mobile no.   :");
+                      term.push(function(command, term){
+                        if(/^[789]\d{9}$/.test(command)){
+                          var mobno = command;
+                          term.echo("\nYour Mobile no is " + mobno);
+                          term.pop();
+                          term.echo("\nEnter 1. for Techical or 2. for Management   :");
+                          term.push(function(command, term){
+                            if(/1|2/.test(command)){
+                              var choice = command;
+                              //term.echo(choice);
+                              term.pop();
+                              term.echo("Your details are : \n");
+                              term.echo("Name " + name +"\nRegistration No." + regno + 
+                                "\nMobile No."+ mobno+ "\nEmail id" +email +"\nChoice" + choice);
+                              term.echo("If the details are correct please enter 1 else 0");
+                              term.push(function(command, term){
+                                if(/1/.test(command)){
+                                    term.echo("\nSuccessfully Registered!");
+                                    term.pop();
+                                    status = 1;                                  
+                                }
+                                else {
+                                  term.echo("\nPlease try again!");
+                                  status  = 0;
+                                  term.pop();
+                                }
+                              });
+                            }
+                          });
+                        }
+                      });
+                    }
+                  });
+                } 
+            });
+           }
+        }); 
+      }
+
+      else if (inputs[1] === "rsvp") {
         term.echo(rsvp)
         term.push(function(command, term) {
           window.open(
@@ -272,6 +339,7 @@ Sorry, you are slightly late for attending the event. \
         callback(['gem install recruitments',
           'recruitments invitation',
           'recruitments location',
+          'recruitments  process',
           'recruitments gdg']);
       },
       tabcompletion: true
