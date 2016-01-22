@@ -71,6 +71,7 @@ var process = "\
 Commands: \
 \n\t[[b;#268bd2;]recruitments invitation]      [[b;#2aa198;]# Your invitation card is inside this envelope] \
 \n\t[[b;#268bd2;]recruitments gdg]           [[b;#2aa198;]# Glory words about the gdg] \
+\n\t[[b;#268bd2;]recruitments process]           [[b;#2aa198;]# To register] \
 \n\t[[b;#268bd2;]recruitments location]        [[b;#2aa198;]# Google maps link to the recruitments venue] \
   ";
     var gdg = "\
